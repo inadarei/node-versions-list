@@ -2,16 +2,20 @@ var request = require('request');
 
 var raw_listing;
 
-function grab_listing(cb) {
+function grab_listing(opts, cb) {
   var url = 'https://nodejs.org/dist/index.tab';
   var versions=[];
   var headers=[];
   var results=[];
 
+  var _blacklist = [];
+  if (opts && typeof opts === 'object' && opts.blacklist && typeof Array.isArray(opts.blacklist)) {
+    _blacklist = opts.blacklist;
+  }
+
   request(url, function (error, response, body) {
     if (error || response.statusCode !== 200) {
       return cb(null, error);
-
     }
 
     var lines = body.split("\n");
@@ -27,7 +31,9 @@ function grab_listing(cb) {
       } else {
         results[i] = {};
         for (var j=0, jmax=parts.length-1; j<jmax; j++) {
-          results[i][headers[j]] = parts[j];
+          if (_blacklist.indexOf(headers[j]) == -1) {
+            results[i][headers[j]] = parts[j];  
+          } 
         }
       }
     }
@@ -40,8 +46,9 @@ function grab_listing(cb) {
 
 module.exports.list = function(options, cb) {
 
-  grab_listing(function(err,result) {
-    cb(err, result);
+  grab_listing(options, function(err,result) {
+    //cb(err, []);
+    cb(err, result);    
   });
   
 }

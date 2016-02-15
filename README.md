@@ -20,6 +20,16 @@ nodevers.list(null, function(err, result) {
 });
 ```
 
+You can also exclude certain fields from the resulting JSON, if you don't need them:
+
+```javascript
+var options = { "blacklist" : ["files", "openssl", "modules", "uv", "zlib"] };
+nodevers.list(null, function(err, result) {
+    console.log(result);
+});
+
+```
+
 ### Using as a CLI utility
 
 ```console
@@ -33,7 +43,7 @@ nodevers.list(null, function(err, result) {
 
 Differences:
 
-1. NV caches static list of node versions and you need to run an update script if you want to get the latest list.
+1. NV caches static list of node versions and you need to run an update script if you want to get the latest list. Node-vers does a live lookup every time.
 2. NV grabs the list of versions by looking at the list of tags in Node's github repo. This is pretty cool, but it means: git must be installed wherever you want to use this module + you may get something weird if somebody over at Node accidentally creates a stray git tag.
 3. NV only returns the list of versions, while Node-Vers returns an object, for each version, containing following kind of metadata:
 
