@@ -1,7 +1,7 @@
 {
-  "name": "node-versions-list",
+  "name": "node-vers",
   "version": "1.0.0",
-  "description": "Grab a full list of node versions",
+  "description": "Grab a full list of node versions and associated metadata",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -9,6 +9,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/inadarei/node-versions-list.git"
+  },
+  "bin": {
+    "node-vers": "./bin/cli.js"
   },
   "author": "Irakli Nadareishvili",
   "license": "MIT",
