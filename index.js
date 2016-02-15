@@ -1,4 +1,5 @@
-var request = require('request');
+var request = require('request')
+  , semver  = require('semver');
 
 var raw_listing;
 
@@ -7,10 +8,17 @@ function grab_listing(opts, cb) {
   var versions=[];
   var headers=[];
   var results=[];
+  var latests=[];
 
-  var _blacklist = [];
-  if (opts && typeof opts === 'object' && opts.blacklist && typeof Array.isArray(opts.blacklist)) {
-    _blacklist = opts.blacklist;
+  var _blacklist = [], _latest_only = false;
+  if (opts && typeof opts === 'object') {
+    if (opts.blacklist && typeof Array.isArray(opts.blacklist)) {
+      _blacklist = opts.blacklist;
+    }
+
+    if (opts.latest_only) {
+      _latest_only = true;
+    }
   }
 
   request(url, function (error, response, body) {
@@ -20,6 +28,7 @@ function grab_listing(opts, cb) {
 
     var lines = body.split("\n");
     var parts = [];
+    var version=0, latest_minor_ver = 0;
 
     for (var i=0, max=lines.length-1; i<max; i++) {
 
@@ -35,10 +44,25 @@ function grab_listing(opts, cb) {
             results[i][headers[j]] = parts[j];  
           } 
         }
+
+        version = results[i]['version'];
+        version = semver.clean(version);
+        // Determine latest minor version
+        latest_minor_ver = version.replace(/(\d+\.\d+)?\.\d+/, "$1");
+
+        // Make sure it is the latest version in the minor segment
+        if (!latests[latest_minor_ver] || semver.lt(latests[latest_minor_ver].version, version)) {
+          latests[latest_minor_ver] = results[i];          
+        }
+
       }
     }
 
-    cb(null,results);
+    if (_latest_only) {
+      cb(null,latests);
+    } else {
+      cb(null,results);
+    }
 
   });
 

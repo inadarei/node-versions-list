@@ -5,7 +5,10 @@ var argv = require('minimist')(process.argv.slice(2));
 var nversions = require('../index.js');
 
 //var options = { "blacklist" : ["files", "openssl", "modules", "uv", "zlib"] };
+//var options = { "latest_only" : true 
+//              , "blacklist" : ["files", "openssl", "modules", "uv", "zlib"] };
 var options;
+
 
 nversions.list(options, function(err, result) {
   if (err) {

@@ -24,10 +24,19 @@ You can also exclude certain fields from the resulting JSON, if you don't need t
 
 ```javascript
 var options = { "blacklist" : ["files", "openssl", "modules", "uv", "zlib"] };
-nodevers.list(null, function(err, result) {
+nodevers.list(options, function(err, result) {
     console.log(result);
 });
+```
 
+And you can indicate to only get single (latest) value for each minor version:
+
+```javascript
+var options = { "latest_only" : true 
+              , "blacklist" : ["files", "openssl", "modules", "uv", "zlib"] };
+nodevers.list(options, function(err, result) {
+    console.log(result);
+});
 ```
 
 ### Using as a CLI utility
