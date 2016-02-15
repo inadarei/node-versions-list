@@ -1,6 +1,9 @@
 {
   "name": "node-vers",
   "version": "1.0.0",
+  "publishConfig" : {
+    "registry" : "https://registry.npmjs.org/"
+  },
   "description": "Grab a full list of node versions and associated metadata",
   "main": "index.js",
   "scripts": {
