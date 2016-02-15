@@ -1,0 +1,19 @@
+{
+  "name": "node-versions-list",
+  "version": "1.0.0",
+  "description": "Grab a full list of node versions",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inadarei/node-versions-list.git"
+  },
+  "author": "Irakli Nadareishvili",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/inadarei/node-versions-list/issues"
+  },
+  "homepage": "https://github.com/inadarei/node-versions-list#readme"
+}
